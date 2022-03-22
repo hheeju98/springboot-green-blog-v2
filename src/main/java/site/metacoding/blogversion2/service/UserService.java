@@ -5,6 +5,7 @@ import javax.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import lombok.RequiredArgsConstructor;
+import site.metacoding.blogversion2.domain.user.User;
 import site.metacoding.blogversion2.domain.user.UserRepository;
 import site.metacoding.blogversion2.web.api.dto.user.JoinDto;
 
@@ -19,5 +20,12 @@ public class UserService {
 
         userRepository.save(joinDto.toEntity());
 
+    }
+
+    public User 로그인(LoginDto loginDto) {
+        // 로그인 처리 쿼리를 JPA에서 제공해주지 않는다.
+        // SELECT * FROM user WHERE username=:username AND password = :password
+        User userEntity = userRepository.mLogin(loginDto.getUsername(), loginDto.getPassword());
+        return userEntity;
     }
 }
