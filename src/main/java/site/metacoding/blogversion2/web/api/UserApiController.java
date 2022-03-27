@@ -35,7 +35,10 @@ public class UserApiController {
             return new ResponseDto<String>(-1, "로그인실패", null);
         }
 
-        response.addHeader("Set-Cookie", "remember=" + loginDto.getUsername() + "; path=/");
+        if (loginDto.getRemember().equals("on")) {
+            response.addHeader("Set-Cookie", "remember=" + loginDto.getUsername() + "; path=/");
+        }
+
         // response.addHeader("Set-Cookie", "remember=" + loginDto.getUsername() + ";
         // path=/; httpOnly=true");
         // response.addHeader("Set-Cookie", "path=/");
@@ -46,13 +49,6 @@ public class UserApiController {
 
         session.setAttribute("principal", userEntity);
 
-        if (user.getRemember != null && user.getRemember().equals("on")) {
-            response.addHeader("Set-Cookie", "remember=" + loginDto.getUsername());
-        } else {
-
-        }
-
-        session.setAttribute("principal", userEntity);
-        return new ResponseDto<String>(1, "로그인 성공", null);
+        return new ResponseDto<String>(1, "로그인성공", null);
     }
 }
